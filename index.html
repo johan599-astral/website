@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astral Tech Advisors | Technology Consulting</title>
+  <meta name="description" content="Astral Tech Advisors delivers expert technology consulting, cloud solutions, and digital transformation strategies to accelerate your business.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --indigo-50: #eef2ff;
+      --indigo-100: #e0e7ff;
+      --indigo-200: #c7d2fe;
+      --indigo-400: #818cf8;
+      --indigo-500: #6366f1;
+      --indigo-600: #4f46e5;
+      --indigo-700: #4338ca;
+      --indigo-800: #3730a3;
+      --indigo-900: #312e81;
+      --indigo-950: #1e1b4b;
+      --purple-400: #c084fc;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--gray-800);
+      line-height: 1.6;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, var(--indigo-600), var(--purple-500));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray-600);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--indigo-600); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--indigo-600), var(--purple-600));
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gray-700);
+      margin: 6px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ── HERO ────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(160deg, var(--indigo-950) 0%, var(--indigo-900) 40%, #1a1050 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero .container { position: relative; z-index: 1; padding-top: 72px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--indigo-200);
+      margin-bottom: 24px;
+    }
+    .hero-badge span { color: var(--purple-400); }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--indigo-400), var(--purple-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--indigo-200);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--indigo-500), var(--purple-600));
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.35);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-graphic {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 1;
+      position: relative;
+    }
+    .hero-graphic .orbit {
+      position: absolute;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 50%;
+      animation: spin 30s linear infinite;
+    }
+    .hero-graphic .orbit:nth-child(1) {
+      inset: 10%;
+      animation-duration: 25s;
+    }
+    .hero-graphic .orbit:nth-child(2) {
+      inset: 25%;
+      animation-duration: 20s;
+      animation-direction: reverse;
+    }
+    .hero-graphic .orbit:nth-child(3) {
+      inset: 40%;
+      animation-duration: 15s;
+    }
+    .hero-graphic .core {
+      position: absolute;
+      inset: 35%;
+      background: linear-gradient(135deg, var(--indigo-500), var(--purple-600));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 60px rgba(99, 102, 241, 0.4), 0 0 120px rgba(139, 92, 246, 0.2);
+    }
+    .hero-graphic .core svg { width: 40%; height: 40%; }
+    .hero-graphic .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--purple-400);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(192, 132, 252, 0.6);
+    }
+    .hero-graphic .dot:nth-child(5) { top: 10%; left: 50%; }
+    .hero-graphic .dot:nth-child(6) { top: 50%; right: 8%; background: var(--indigo-400); }
+    .hero-graphic .dot:nth-child(7) { bottom: 15%; left: 20%; background: var(--indigo-400); }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: 1.75rem;
+      color: #fff;
+    }
+    .hero-stat span {
+      font-size: 0.85rem;
+      color: var(--indigo-300);
+    }
+
+    /* ── SECTION COMMON ──────────────────────────────── */
+    section { padding: 100px 0; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--indigo-600);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      color: var(--gray-900);
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray-500);
+      max-width: 600px;
+    }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-header .section-subtitle { margin: 0 auto; }
+
+    /* ── SERVICES ─────────────────────────────────────── */
+    .services { background: var(--gray-50); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 36px 28px;
+      border: 1px solid var(--gray-200);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.1);
+      border-color: var(--indigo-200);
+    }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--indigo-50), var(--indigo-100));
+    }
+    .service-icon svg { width: 26px; height: 26px; color: var(--indigo-600); }
+    .service-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 0.95rem;
+      color: var(--gray-500);
+      line-height: 1.65;
+    }
+
+    /* ── ABOUT ────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-image {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, var(--indigo-100), var(--indigo-50));
+      aspect-ratio: 4/3;
+    }
+    .about-image-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, var(--indigo-600), var(--purple-600));
+    }
+    .about-image-inner svg { width: 50%; opacity: 0.25; color: #fff; }
+    .about-content .section-subtitle { margin-bottom: 32px; }
+    .about-features { display: flex; flex-direction: column; gap: 20px; }
+    .about-feature {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .about-feature-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--indigo-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-feature-icon svg { width: 20px; height: 20px; color: var(--indigo-600); }
+    .about-feature h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--gray-900);
+    }
+    .about-feature p {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+    }
+
+    /* ── TESTIMONIALS ─────────────────────────────────── */
+    .testimonials { background: var(--indigo-950); }
+    .testimonials .section-label { color: var(--indigo-400); }
+    .testimonials .section-title { color: #fff; }
+    .testimonials .section-subtitle { color: var(--indigo-300); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: border-color 0.3s;
+    }
+    .testimonial-card:hover { border-color: rgba(255,255,255,0.16); }
+    .testimonial-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+    .testimonial-stars svg { width: 18px; height: 18px; color: #fbbf24; }
+    .testimonial-card blockquote {
+      font-size: 0.95rem;
+      color: var(--indigo-200);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: normal;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--indigo-500), var(--purple-500));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.85rem;
+    }
+    .testimonial-author strong {
+      display: block;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    .testimonial-author span {
+      font-size: 0.8rem;
+      color: var(--indigo-400);
+    }
+
+    /* ── CONTACT ──────────────────────────────────────── */
+    .contact { background: var(--gray-50); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 16px;
+    }
+    .contact-info > p {
+      color: var(--gray-500);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .contact-detail-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--indigo-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-detail-icon svg { width: 20px; height: 20px; color: var(--indigo-600); }
+    .contact-detail strong {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      font-weight: 500;
+    }
+    .contact-detail span {
+      font-size: 0.95rem;
+      color: var(--gray-900);
+      font-weight: 600;
+    }
+
+    .contact-form-wrapper {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid var(--gray-200);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--gray-300);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--gray-800);
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--indigo-500);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--indigo-600), var(--purple-600));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      font-family: inherit;
+    }
+    .form-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    .footer {
+      background: var(--gray-900);
+      color: var(--gray-400);
+      padding: 64px 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand .nav-logo {
+      font-size: 1.3rem;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      max-width: 300px;
+    }
+    .footer h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .footer ul li { margin-bottom: 12px; }
+    .footer ul a {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      transition: color 0.2s;
+    }
+    .footer ul a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid var(--gray-800);
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .footer-socials { display: flex; gap: 16px; }
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--gray-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .footer-socials a:hover { background: var(--indigo-600); }
+    .footer-socials svg { width: 16px; height: 16px; color: var(--gray-400); }
+    .footer-socials a:hover svg { color: #fff; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero p { margin: 0 auto 40px; }
+      .hero-buttons { justify-content: center; }
+      .hero-visual { display: none; }
+      .hero-stats { justify-content: center; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 24px;
+        border-bottom: 1px solid var(--gray-200);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      }
+      .nav-toggle { display: block; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 20px; align-items: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="nav-logo">Astral Tech Advisors</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-cta">Get Started</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>&#9733;</span> Trusted by 200+ companies worldwide
+        </div>
+        <h1>Navigate the Future with <span class="gradient-text">Astral Precision</span></h1>
+        <p>We partner with forward-thinking organizations to architect technology strategies, modernize infrastructure, and deliver digital transformation that drives measurable results.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn-primary">
+            Start a Project
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#services" class="btn-secondary">Our Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>200+</strong><span>Clients Served</span></div>
+          <div class="hero-stat"><strong>98%</strong><span>Satisfaction Rate</span></div>
+          <div class="hero-stat"><strong>15+</strong><span>Years Experience</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-graphic">
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+          <div class="orbit"></div>
+          <div class="core">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9 2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9 2.83-2.83"/></svg>
+          </div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ─────────────────────────────────────── -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Services</span>
+      <h2 class="section-title">Solutions That Drive Growth</h2>
+      <p class="section-subtitle">From strategy to execution, we provide end-to-end technology consulting tailored to your business needs.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        </div>
+        <h3>Cloud Architecture</h3>
+        <p>Design and migrate to scalable cloud infrastructure on AWS, Azure, or GCP with security and cost-efficiency built in.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+        </div>
+        <h3>Digital Transformation</h3>
+        <p>Modernize legacy systems and workflows with data-driven strategies that unlock new efficiency and revenue streams.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Cybersecurity</h3>
+        <p>Protect your organization with comprehensive security audits, threat modeling, and zero-trust architecture implementation.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>AI & Automation</h3>
+        <p>Leverage machine learning and intelligent automation to streamline operations and gain predictive insights from your data.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Software Development</h3>
+        <p>Build custom applications, APIs, and platforms with modern engineering practices, from MVPs to enterprise-grade systems.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        </div>
+        <h3>Data & Analytics</h3>
+        <p>Transform raw data into actionable intelligence with modern data platforms, dashboards, and reporting frameworks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ────────────────────────────────────────── -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image">
+        <div class="about-image-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><rect x="2" y="3" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-label">About Us</span>
+        <h2 class="section-title">Technology Partners You Can Trust</h2>
+        <p class="section-subtitle">For over 15 years, Astral Tech Advisors has helped businesses of all sizes harness technology to achieve their goals. We combine deep technical expertise with strategic thinking to deliver solutions that last.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <h4>Proven Track Record</h4>
+              <p>200+ successful projects delivered on time and within budget across diverse industries.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <h4>Expert Team</h4>
+              <p>Certified architects and engineers with deep expertise in cloud, security, and data platforms.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div>
+              <h4>End-to-End Delivery</h4>
+              <p>From initial assessment through implementation and ongoing support, we own the entire lifecycle.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ─────────────────────────────────── -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title">What Our Clients Say</h2>
+      <p class="section-subtitle">Hear from the teams we've partnered with to deliver transformative technology solutions.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"Astral Tech Advisors transformed our entire cloud infrastructure. We reduced hosting costs by 40% while significantly improving performance and reliability."</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SL</div>
+          <div>
+            <strong>Sarah Lindqvist</strong>
+            <span>CTO, Meridian Health</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"Their cybersecurity team identified critical vulnerabilities we hadn't even considered. The zero-trust framework they implemented gives us complete confidence in our security posture."</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MR</div>
+          <div>
+            <strong>Marcus Reyes</strong>
+            <span>VP Engineering, FinLedger</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"The AI-powered analytics platform Astral built for us has become the backbone of our decision-making. We can now forecast demand with 90% accuracy."</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JN</div>
+          <div>
+            <strong>Julia Nakamura</strong>
+            <span>COO, Vantage Logistics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ──────────────────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Contact</span>
+      <h2 class="section-title">Let's Build Something Great</h2>
+      <p class="section-subtitle">Tell us about your project and we'll get back to you within one business day.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Get in Touch</h3>
+        <p>Whether you're starting a new initiative or need help with an existing system, our team is ready to help you find the right path forward.</p>
+        <div class="contact-details">
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <strong>Email</strong>
+              <span>hello@astraltechadvisors.com</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <strong>Phone</strong>
+              <span>(555) 123-4567</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong>Location</strong>
+              <span>San Francisco, CA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrapper">
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="john@company.com" required>
+            </div>
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" placeholder="Company Inc.">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="service">Service of Interest</label>
+            <select id="service" name="service">
+              <option value="">Select a service...</option>
+              <option value="cloud">Cloud Architecture</option>
+              <option value="digital">Digital Transformation</option>
+              <option value="security">Cybersecurity</option>
+              <option value="ai">AI & Automation</option>
+              <option value="development">Software Development</option>
+              <option value="data">Data & Analytics</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ───────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Astral Tech Advisors</a>
+        <p>Expert technology consulting to help your business navigate the digital landscape with confidence.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Cloud Architecture</a></li>
+          <li><a href="#services">Digital Transformation</a></li>
+          <li><a href="#services">Cybersecurity</a></li>
+          <li><a href="#services">AI & Automation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Astral Tech Advisors. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+        </a>
+        <a href="#" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // Close mobile nav on link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Contact form handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    const originalText = btn.textContent;
+    btn.textContent = 'Message Sent!';
+    btn.style.background = '#059669';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+
+  // Scroll-triggered animations
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.service-card, .testimonial-card, .about-feature, .contact-detail').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
