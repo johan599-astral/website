@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astral Tech Advisors — Next-Gen Bookkeeping & Financial Consulting</title>
+  <meta name="description" content="Astral Tech Advisors blends proven accounting expertise with cutting-edge automation to deliver crystal-clear financials and strategic guidance you can trust." />
+  <meta property="og:title" content="Astral Tech Advisors" />
+  <meta property="og:description" content="Next-generation bookkeeping and financial consulting for small and medium businesses." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#home" class="nav-logo" aria-label="Astral Tech Advisors Home">
+          <span class="nav-logo-icon" aria-hidden="true">✦</span>
+          <span>Astral Tech Advisors</span>
+        </a>
+
+        <ul class="nav-links" id="nav-links" role="list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <a href="https://calendly.com" target="_blank" rel="noopener" class="btn btn-primary btn-sm nav-cta" id="nav-book-btn">
+          Book Now <span aria-hidden="true">→</span>
+        </a>
+
+        <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero" id="home" aria-label="Hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Background glow orbs -->
+    <div class="orb orb-violet orb-1" aria-hidden="true"></div>
+    <div class="orb orb-cyan orb-2" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge" role="note">
+          <span aria-hidden="true">✦</span>
+          QuickBooks Pro Advisor · Silver Partner
+        </div>
+
+        <h1 class="hero-title">
+          Astral clarity<br />
+          <span class="gradient-text">for your business</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          At Astral Tech Advisors, we blend proven accounting expertise with
+          cutting-edge automation to deliver crystal-clear financials and
+          strategic guidance you can trust.
+        </p>
+
+        <p class="hero-sub2">
+          We help you make confident decisions with timely financial reporting,
+          streamlined processes, and insights designed to fuel your business growth.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#services" class="btn btn-primary" id="hero-cta-services">
+            Explore Services <span aria-hidden="true">→</span>
+          </a>
+          <a href="#contact" class="btn btn-ghost" id="hero-cta-contact">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <div class="scroll-mouse"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SERVICES — PRIMARY
+       ============================================================ -->
+  <section class="services" id="services" aria-label="Our Core Services">
+    <div class="orb orb-violet orb-1" aria-hidden="true"></div>
+    <div class="orb orb-cyan orb-2" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">What We Offer</div>
+        <h2>Financial services that <span class="gradient-text">move with you</span></h2>
+        <p>
+          From real-time bookkeeping to fractional controller leadership,
+          every service is powered by modern automation built for growth.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Bookkeeping Services -->
+        <article class="glass-card service-card reveal" id="service-bookkeeping">
+          <div class="service-icon violet" aria-hidden="true">📒</div>
+          <h3>Bookkeeping Services</h3>
+          <p>
+            Reliable, accurate bookkeeping tailored to your business. Our services
+            include monthly reconciliations, transaction categorization, and AP support —
+            all designed to keep your records organized and up to date.
+          </p>
+          <a href="#contact" class="service-link">
+            Learn more <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+        <!-- Financial Consulting -->
+        <article class="glass-card service-card reveal reveal-delay-1" id="service-consulting">
+          <div class="service-icon cyan" aria-hidden="true">📊</div>
+          <h3>Financial Consulting</h3>
+          <p>
+            Need deeper insight or support beyond the books? We offer project-based
+            and ongoing consulting led by experienced accountants and controllers.
+            Whether you're budgeting, forecasting, or cleaning up historical data,
+            we help you make confident, informed financial decisions.
+          </p>
+          <a href="#contact" class="service-link">
+            Learn more <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+        <!-- Automation & Workflow -->
+        <article class="glass-card service-card reveal reveal-delay-2" id="service-automation">
+          <div class="service-icon mix" aria-hidden="true">⚡</div>
+          <h3>Automation &amp; Workflow Setup</h3>
+          <p>
+            We help small businesses streamline back-office tasks through cutting-edge
+            automation. From reducing manual entry to integrating key financial tools
+            via n8n, Make, and Zapier — we design efficient workflows that save time,
+            minimize errors, and support growth without extra overhead.
+          </p>
+          <a href="#contact" class="service-link">
+            Learn more <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+       ============================================================ -->
+  <section class="about" id="about" aria-label="About Astral Tech Advisors">
+    <div class="container">
+      <div class="about-grid">
+        <!-- Left: Text -->
+        <div class="about-content reveal">
+          <div class="section-label">About our company</div>
+          <h2>Built by accountants, <span class="gradient-text">powered by automation</span></h2>
+
+          <p>
+            After decades of experience in corporate accounting and consulting, our team
+            has seen it all. One thing that is apparent is that in today's business
+            environment, <strong>small to medium sized businesses are being significantly
+            under served.</strong> Our goal is to level the playing field and help these
+            local companies grow.
+          </p>
+
+          <p>
+            Based in <strong>Atlanta, Georgia</strong> and with teammates across the US,
+            we are aiming at becoming the leader in next-generation bookkeeping and
+            accounting consulting. Our approach utilizes our vast experience, along with
+            emerging automation technology to deliver results for our clients.
+          </p>
+
+          <p>
+            No project is too big or small for us. Whether you are a local coffee shop
+            struggling with integrating your PoS into an accounting system, or a
+            technology company that just reached $1M in ARR — you will find that our
+            company can add <strong>tremendous value!</strong>
+          </p>
+
+          <div class="about-cta">
+            <a href="#contact" class="btn btn-primary" id="about-cta-meet">
+              Meet the Team <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Stats / Proof Points -->
+        <div class="about-visual reveal reveal-delay-1">
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">
+              <strong>Years of Corporate Experience</strong>
+              Decades of combined accounting &amp; consulting expertise
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number">3×</div>
+            <div class="stat-label">
+              <strong>Faster Back-Office Processing</strong>
+              Via custom automation replacing manual workflows
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">
+              <strong>Tailored to Your Business</strong>
+              No cookie-cutter packages — every engagement is custom
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number">$0</div>
+            <div class="stat-label">
+              <strong>Hidden Fees</strong>
+              Transparent pricing, project-based and ongoing options
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXTENDED SERVICES
+       ============================================================ -->
+  <section class="ext-services" aria-label="All Services">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-label">Full Service Menu</div>
+        <h2>Every stage of <span class="gradient-text">your journey</span></h2>
+        <p>From lean startups to scaling operations, we have an offering that fits.</p>
+      </div>
+
+      <div class="ext-services-grid">
+        <!-- Automation-Driven Bookkeeping -->
+        <article class="glass-card service-card reveal" id="service-auto-bookkeeping">
+          <div class="service-icon violet" aria-hidden="true">🤖</div>
+          <h3>Automation-Driven Bookkeeping</h3>
+          <p>
+            Reduce manual entry and errors with custom automation pipelines. We
+            design workflows using n8n, Make, and Zapier for real-time financial
+            visibility and speed.
+          </p>
+          <a href="#contact" class="service-link">Learn more <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Fractional Controller -->
+        <article class="glass-card service-card reveal reveal-delay-1" id="service-fractional">
+          <div class="service-icon cyan" aria-hidden="true">🏦</div>
+          <h3>Fractional Controller</h3>
+          <p>
+            Strategic financial leadership without the cost of a full-time hire.
+            We provide scalable financial planning, forecasting, and oversight
+            that grows with your business.
+          </p>
+          <a href="#contact" class="service-link">Learn more <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Bookkeeping Essentials -->
+        <article class="glass-card service-card reveal reveal-delay-2" id="service-essentials">
+          <div class="service-icon mix" aria-hidden="true">✅</div>
+          <h3>Bookkeeping Essentials</h3>
+          <p>
+            A solid foundation for any business. Core monthly reconciliation,
+            P&amp;L reporting, and clean books delivered reliably every month.
+          </p>
+          <a href="#contact" class="service-link">Learn more <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Growth-Stage Support -->
+        <article class="glass-card service-card reveal" id="service-growth">
+          <div class="service-icon violet" aria-hidden="true">📈</div>
+          <h3>Growth-Stage Support</h3>
+          <p>
+            For businesses scaling fast. We install the financial infrastructure —
+            ERP integrations, reporting dashboards, and controller-level oversight —
+            that keeps rapid growth under control.
+          </p>
+          <a href="#contact" class="service-link">Learn more <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- Custom Engagements -->
+        <article class="glass-card service-card reveal reveal-delay-1" id="service-custom">
+          <div class="service-icon cyan" aria-hidden="true">🛠️</div>
+          <h3>Custom Engagements</h3>
+          <p>
+            Have a unique challenge? We tackle one-off projects — from historical
+            data cleanups to multi-entity consolidation and everything in between.
+          </p>
+          <a href="#contact" class="service-link">Learn more <span aria-hidden="true">→</span></a>
+        </article>
+
+        <!-- On-Demand Consulting -->
+        <article class="glass-card service-card reveal reveal-delay-2" id="service-ondemand">
+          <div class="service-icon mix" aria-hidden="true">💬</div>
+          <h3>On-Demand Consulting</h3>
+          <p>
+            Expert guidance exactly when you need it. Book sessions for a specific
+            question, a strategic review, or to pressure-test your financial models
+            before a major decision.
+          </p>
+          <a href="#contact" class="service-link">Learn more <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section class="contact" id="contact" aria-label="Contact Us">
+    <div class="orb orb-violet orb-1" aria-hidden="true"></div>
+    <div class="orb orb-cyan orb-2" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Left: Info -->
+        <div class="contact-info reveal">
+          <div class="section-label">Contact Us</div>
+          <h2>Let's talk about <span class="gradient-text">your business</span></h2>
+          <p>
+            We're here to help. Have questions about our services or want to
+            discuss how we can support your business? Fill out the form and a
+            member of our team will be in touch within <strong>1–2 business
+            days.</strong>
+          </p>
+
+          <div class="contact-meta">
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">✉️</div>
+              <div class="contact-item-text">
+                <strong>Email us directly</strong>
+                <span>contact@astraltechadvisors.com</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">📍</div>
+              <div class="contact-item-text">
+                <strong>Headquarters</strong>
+                <span>Atlanta, Georgia · US-wide team</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon" aria-hidden="true">🕐</div>
+              <div class="contact-item-text">
+                <strong>Response time</strong>
+                <span>1–2 business days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <form class="glass-card contact-form reveal reveal-delay-1" id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name</label>
+              <input type="text" id="first-name" name="firstName" placeholder="Jane" required />
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <input type="text" id="last-name" name="lastName" placeholder="Smith" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your business and how we can help…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="form-submit-btn">
+            Send Message <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="#home" class="nav-logo" aria-label="Astral Tech Advisors">
+            <span class="nav-logo-icon" aria-hidden="true">✦</span>
+            <span>Astral Tech Advisors</span>
+          </a>
+          <p>
+            Next-generation bookkeeping and financial consulting for small
+            and medium businesses. Based in Atlanta, GA.
+          </p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <h4>Explore</h4>
+          <ul role="list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Our Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Newsletter -->
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <p style="font-size:0.88rem; margin-top: 0; margin-bottom: 0;">
+            Sign up to receive news and updates.
+          </p>
+          <form class="newsletter-form" id="newsletter-form" novalidate>
+            <input
+              type="email"
+              name="email"
+              id="newsletter-email"
+              placeholder="Email address"
+              aria-label="Email address for newsletter"
+              required
+            />
+            <button type="submit">Sign Up</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 Astral Tech Advisors. All rights reserved.</span>
+        <a href="mailto:contact@astraltechadvisors.com">
+          contact@astraltechadvisors.com
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
