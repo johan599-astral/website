@@ -1,6 +1,7 @@
 /* ============================================================
    ASTRAL TECH ADVISORS — main.js
-   Particle Canvas · Scroll-Reveal · Navbar · Mobile Menu
+   Particle Canvas · Warp Launch · Shooting Stars · Constellation
+   Scroll-Reveal · Navbar · Mobile Menu
    ============================================================ */
 
 'use strict';
@@ -11,67 +12,168 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 /* ============================================================
    1. PARTICLE STAR CANVAS
+      Phase 1: Warp/hyperspace launch (first ~110 frames)
+      Phase 2: Normal starfield with shooting stars + constellation lines
    ============================================================ */
 (function initStars() {
   const canvas = $('#hero-canvas');
   if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
-  let W, H, stars = [], animId;
+  let W, H, stars = [], nebulaOrbs = [], animId;
 
-  const STAR_COUNT  = 220;
+  const STAR_COUNT       = 220;
   const NEBULA_ORB_COUNT = 6;
 
+  /* ── Warp phase ── */
+  let warpPhase = true;
+  let warpTimer = 0;
+  const WARP_FRAMES = 110;
+  let warpRays = [];
+
+  /* ── Shooting stars ── */
+  let shootingStars    = [];
+  let shootingCooldown = 0;
+  let nextShootAt      = 200;
+  const SHOOT_MIN      = 150;
+  const SHOOT_MAX      = 320;
+
+  let t = 0;
+
+  /* ── Helpers ── */
   function resize() {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
   }
 
-  function randomBetween(a, b) { return a + Math.random() * (b - a); }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
 
+  /* ── Factory: normal star ── */
   function createStar() {
     return {
-      x:     randomBetween(0, W),
-      y:     randomBetween(0, H),
-      r:     randomBetween(0.4, 1.8),
-      alpha: randomBetween(0.3, 1),
-      speed: randomBetween(0.0003, 0.001),   // twinkle speed
-      phase: randomBetween(0, Math.PI * 2),
-      drift: randomBetween(-0.04, 0.04),     // horizontal drift
-      color: Math.random() > 0.8 ? '#06B6D4' : '#FFFFFF',
+      x:     rnd(0, W),
+      y:     rnd(0, H),
+      r:     rnd(0.4, 1.8),
+      alpha: rnd(0.3, 1),
+      speed: rnd(0.0003, 0.001),
+      phase: rnd(0, Math.PI * 2),
+      drift: rnd(-0.04, 0.04),
+      color: Math.random() > 0.85 ? '#06B6D4'
+           : Math.random() > 0.92  ? '#C084FC'
+           : '#FFFFFF',
     };
   }
 
+  /* ── Factory: nebula orb ── */
   function createNebulaOrb() {
     const colors = [
       'rgba(124,58,237,',
       'rgba(6,182,212,',
       'rgba(159,96,245,',
       'rgba(34,211,238,',
+      'rgba(192,38,211,',
     ];
     return {
-      x:      randomBetween(W * 0.1, W * 0.9),
-      y:      randomBetween(H * 0.05, H * 0.75),
-      r:      randomBetween(120, 260),
-      alpha:  randomBetween(0.03, 0.09),
-      color:  colors[Math.floor(Math.random() * colors.length)],
-      drift:  { x: randomBetween(-0.05, 0.05), y: randomBetween(-0.03, 0.03) },
+      x:     rnd(W * 0.05, W * 0.95),
+      y:     rnd(H * 0.05, H * 0.85),
+      r:     rnd(130, 280),
+      alpha: rnd(0.04, 0.11),
+      color: colors[Math.floor(Math.random() * colors.length)],
+      drift: { x: rnd(-0.05, 0.05), y: rnd(-0.03, 0.03) },
     };
   }
 
-  function init() {
-    resize();
-    stars      = Array.from({ length: STAR_COUNT }, createStar);
-    nebulaOrbs = Array.from({ length: NEBULA_ORB_COUNT }, createNebulaOrb);
+  /* ── Factory: warp rays ── */
+  function createWarpRays() {
+    warpRays = [];
+    const count = 240;
+    for (let i = 0; i < count; i++) {
+      const angle = (i / count) * Math.PI * 2 + rnd(-0.02, 0.02);
+      warpRays.push({
+        angle,
+        dist:      rnd(0, 50),
+        speed:     rnd(2, 20),
+        lineWidth: rnd(0.3, 1.8),
+        alpha:     rnd(0.4, 1),
+        color:     Math.random() > 0.6 ? '#FFFFFF'
+                 : Math.random() > 0.5 ? '#06B6D4'
+                 : '#9F60F5',
+      });
+    }
   }
 
-  let nebulaOrbs = [];
-  let t = 0;
+  /* ── Factory: shooting star ── */
+  function createShootingStar() {
+    const color = Math.random() > 0.5 ? '#ffffff'
+                : Math.random() > 0.5 ? '#06B6D4' : '#C084FC';
+    return {
+      x:       rnd(W * 0.15, W * 1.1),
+      y:       rnd(-20, H * 0.55),
+      vx:      rnd(-12, -20),
+      vy:      rnd(3, 9),
+      tail:    [],
+      tailMax: (rnd(14, 26)) | 0,
+      alpha:   1,
+      active:  true,
+      color,
+      size:    rnd(1.2, 2.5),
+    };
+  }
 
-  function draw() {
+  /* ── Init ── */
+  function init() {
+    resize();
+    stars      = Array.from({ length: STAR_COUNT },       createStar);
+    nebulaOrbs = Array.from({ length: NEBULA_ORB_COUNT }, createNebulaOrb);
+    createWarpRays();
+  }
+
+  /* ── Draw: warp hyperspace launch ── */
+  function drawWarp() {
+    const progress = warpTimer / WARP_FRAMES;
+    const eased    = 1 - Math.pow(1 - progress, 2);   // ease-out quad
+
+    /* Darkening afterglow trail */
+    ctx.fillStyle = `rgba(8, 11, 26, ${0.88 - eased * 0.58})`;
+    ctx.fillRect(0, 0, W, H);
+
+    const cx = W * 0.5;
+    const cy = H * 0.42;
+
+    for (const ray of warpRays) {
+      const d0  = ray.dist;
+      ray.dist += ray.speed * (1 + eased * 10);
+
+      const x1 = cx + Math.cos(ray.angle) * d0;
+      const y1 = cy + Math.sin(ray.angle) * d0;
+      const x2 = cx + Math.cos(ray.angle) * ray.dist;
+      const y2 = cy + Math.sin(ray.angle) * ray.dist;
+
+      if (x2 < -100 || x2 > W + 100 || y2 < -100 || y2 > H + 100) continue;
+
+      ctx.globalAlpha = ray.alpha * Math.max(0, 1 - eased * 0.82);
+      ctx.strokeStyle = ray.color;
+      ctx.lineWidth   = ray.lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 1;
+    warpTimer++;
+
+    if (warpTimer >= WARP_FRAMES) {
+      warpPhase = false;
+      ctx.clearRect(0, 0, W, H);
+    }
+  }
+
+  /* ── Draw: normal starfield ── */
+  function drawNormal() {
     ctx.clearRect(0, 0, W, H);
 
-    // Draw nebula orbs
+    /* Nebula orbs */
     for (const orb of nebulaOrbs) {
       const grd = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.r);
       grd.addColorStop(0,   orb.color + orb.alpha + ')');
@@ -82,22 +184,41 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
       ctx.arc(orb.x, orb.y, orb.r, 0, Math.PI * 2);
       ctx.fill();
 
-      // Slow drift
       orb.x += orb.drift.x;
       orb.y += orb.drift.y;
       if (orb.x < -orb.r || orb.x > W + orb.r) orb.drift.x *= -1;
       if (orb.y < -orb.r || orb.y > H + orb.r) orb.drift.y *= -1;
     }
 
-    // Draw stars
+    /* Constellation lines (first 80 stars, O(n²) bounded) */
+    const cStars = stars.slice(0, 80);
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < cStars.length; i++) {
+      for (let j = i + 1; j < cStars.length; j++) {
+        const dx   = cStars[i].x - cStars[j].x;
+        const dy   = cStars[i].y - cStars[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.globalAlpha = (1 - dist / 100) * 0.14;
+          ctx.strokeStyle = '#7C3AED';
+          ctx.beginPath();
+          ctx.moveTo(cStars[i].x, cStars[i].y);
+          ctx.lineTo(cStars[j].x, cStars[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    /* Stars */
     for (const s of stars) {
       const a = s.alpha * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
       ctx.save();
       ctx.globalAlpha = a;
-      ctx.fillStyle = s.color;
+      ctx.fillStyle   = s.color;
       ctx.beginPath();
 
-      // Occasional 4-pointed sparkle for bright stars
+      /* 4-pointed sparkle for bright stars */
       if (s.r > 1.4) {
         const len = s.r * 2.5;
         ctx.moveTo(s.x, s.y - len);
@@ -115,19 +236,77 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
       ctx.fill();
       ctx.restore();
 
-      // Drift
       s.x += s.drift;
       if (s.x < -5) s.x = W + 5;
       if (s.x > W + 5) s.x = -5;
     }
 
+    /* Shooting stars */
+    shootingCooldown++;
+    if (shootingCooldown >= nextShootAt) {
+      shootingStars.push(createShootingStar());
+      shootingCooldown = 0;
+      nextShootAt      = (rnd(SHOOT_MIN, SHOOT_MAX)) | 0;
+    }
+
+    for (let i = shootingStars.length - 1; i >= 0; i--) {
+      const ss = shootingStars[i];
+      if (!ss.active) { shootingStars.splice(i, 1); continue; }
+
+      ss.tail.push({ x: ss.x, y: ss.y });
+      if (ss.tail.length > ss.tailMax) ss.tail.shift();
+
+      ss.x += ss.vx;
+      ss.y += ss.vy;
+
+      /* Glowing tail */
+      for (let k = 0; k < ss.tail.length; k++) {
+        const tp = k / ss.tail.length;
+        ctx.save();
+        ctx.globalAlpha = tp * ss.alpha * 0.7;
+        ctx.fillStyle   = ss.color;
+        ctx.beginPath();
+        ctx.arc(ss.tail[k].x, ss.tail[k].y, ss.size * tp * 0.8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      /* Head glow radial gradient */
+      ctx.save();
+      ctx.globalAlpha = ss.alpha;
+      const grd = ctx.createRadialGradient(ss.x, ss.y, 0, ss.x, ss.y, ss.size * 5);
+      grd.addColorStop(0, ss.color);
+      grd.addColorStop(1, 'transparent');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(ss.x, ss.y, ss.size * 5, 0, Math.PI * 2);
+      ctx.fill();
+      /* Bright white core */
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(ss.x, ss.y, ss.size * 0.8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      if (ss.x < -120 || ss.y > H + 80) ss.active = false;
+    }
+  }
+
+  /* ── Main loop ── */
+  function draw() {
+    if (warpPhase) drawWarp();
+    else           drawNormal();
     t++;
     animId = requestAnimationFrame(draw);
   }
 
   function handleResizeDebounced() {
     clearTimeout(handleResizeDebounced._t);
-    handleResizeDebounced._t = setTimeout(() => { resize(); stars = Array.from({ length: STAR_COUNT }, createStar); }, 200);
+    handleResizeDebounced._t = setTimeout(() => {
+      resize();
+      stars = Array.from({ length: STAR_COUNT }, createStar);
+      if (warpPhase) createWarpRays();
+    }, 200);
   }
 
   init();
@@ -147,7 +326,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
 
-  // Highlight active nav link based on section in view
+  /* Highlight active nav link based on section in view */
   const sections = $$('section[id]');
   const navLinks = $$('.nav-links a');
 
@@ -180,7 +359,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
     links.classList.toggle('open', isOpen);
     btn.setAttribute('aria-expanded', String(isOpen));
 
-    // Animate hamburger to X
+    /* Animate hamburger to X */
     const spans = $$('span', btn);
     if (isOpen) {
       spans[0].style.transform = 'translateY(7px) rotate(45deg)';
@@ -193,12 +372,12 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
   btn.addEventListener('click', toggle);
 
-  // Close when a nav link is clicked
+  /* Close when a nav link is clicked */
   $$('a', links).forEach(a => a.addEventListener('click', () => {
     if (isOpen) toggle();
   }));
 
-  // Close on Escape
+  /* Close on Escape */
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) toggle(); });
 })();
 
@@ -262,7 +441,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
     btn.disabled = true;
     btn.style.opacity = '0.7';
 
-    // Simulate network delay (would be replaced with fetch to backend)
+    /* Simulate network delay (would be replaced with fetch to backend) */
     setTimeout(() => {
       btn.innerHTML = '✓ Message Sent!';
       btn.style.opacity = '1';
