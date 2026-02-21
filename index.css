@@ -854,3 +854,226 @@ footer {
   h1 { font-size: 2.4rem; }
   .stat-card { flex-direction: column; text-align: center; }
 }
+
+/* ============================================================
+   SPACE THEME ENHANCEMENTS
+   Neon · Cyberpunk · Warp Launch · Constellation
+   ============================================================ */
+
+/* ── Logo Image ── */
+.nav-logo-img {
+  height: 40px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: filter var(--dur-fast);
+}
+.nav-logo:hover .nav-logo-img {
+  filter: drop-shadow(0 0 10px rgba(124,58,237,0.7)) brightness(1.1);
+}
+.navbar.scrolled .nav-logo-img {
+  filter: drop-shadow(0 0 6px rgba(124,58,237,0.4));
+}
+.nav-logo-img--footer {
+  height: 32px;
+}
+
+/* ── Animated Gradient Text — color-cycling shimmer ── */
+.gradient-text {
+  background: linear-gradient(90deg,
+    #7C3AED 0%,
+    #06B6D4 20%,
+    #C026D3 40%,
+    #06B6D4 60%,
+    #7C3AED 80%,
+    #06B6D4 100%
+  );
+  background-size: 300% auto;
+  animation: gradientCycle 6s linear infinite;
+}
+@keyframes gradientCycle {
+  0%   { background-position: 0%   center; }
+  100% { background-position: 300% center; }
+}
+
+/* ── Hero Title Neon Glow ── */
+.hero-title {
+  filter: drop-shadow(0 0 30px rgba(124,58,237,0.3));
+}
+
+/* ── Hero Badge Neon Pulse ── */
+.hero-badge {
+  animation: fadeSlideIn 0.8s var(--ease-out) both, badgePulse 3s ease-in-out 1.2s infinite;
+}
+@keyframes badgePulse {
+  0%, 100% { border-color: rgba(6,182,212,0.3); box-shadow: none; }
+  50%       { border-color: rgba(6,182,212,0.7); box-shadow: 0 0 20px rgba(6,182,212,0.3), 0 0 40px rgba(124,58,237,0.15); }
+}
+
+/* ── Primary Button Light Sweep ── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: skewX(-20deg);
+  animation: btnSweep 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes btnSweep {
+  0%   { left: -100%; }
+  35%  { left: 150%; }
+  100% { left: 150%; }
+}
+
+/* ── Glass Card Enhanced Hover ── */
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    var(--shadow-card),
+    0 0 30px rgba(124,58,237,0.45),
+    0 0 60px rgba(6,182,212,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+  border-color: rgba(124,58,237,0.65);
+}
+
+/* ── Service Icon Glow Pulse ── */
+@keyframes iconPulseV {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 18px rgba(124,58,237,0.55), 0 0 32px rgba(124,58,237,0.2); }
+}
+@keyframes iconPulseC {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 18px rgba(6,182,212,0.55),  0 0 32px rgba(6,182,212,0.2);  }
+}
+.service-icon.violet { animation: iconPulseV 4s ease-in-out infinite; }
+.service-icon.cyan   { animation: iconPulseC 4s ease-in-out infinite 0.8s; }
+.service-icon.mix    { animation: iconPulseV 4s ease-in-out infinite 1.6s; }
+
+/* ── Section Label Glow ── */
+.section-label {
+  animation: labelGlow 3.5s ease-in-out infinite;
+}
+@keyframes labelGlow {
+  0%, 100% { border-color: rgba(6,182,212,0.3); box-shadow: none; }
+  50%       { border-color: rgba(6,182,212,0.65); box-shadow: 0 0 14px rgba(6,182,212,0.3); }
+}
+
+/* ── Stat Card Neon on Hover ── */
+.stat-card:hover .stat-number {
+  filter: drop-shadow(0 0 12px rgba(124,58,237,0.7));
+}
+
+/* ── Cosmic Section Divider ── */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(to right,
+    transparent,
+    rgba(124,58,237,0.6) 30%,
+    rgba(6,182,212,0.8)  50%,
+    rgba(124,58,237,0.6) 70%,
+    transparent
+  );
+  position: relative;
+}
+.section-divider::after {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--clr-bg);
+  padding: 0 0.6rem;
+  font-size: 0.65rem;
+  animation: dividerStar 4s ease-in-out infinite;
+}
+@keyframes dividerStar {
+  0%, 100% { color: var(--clr-cyan);    text-shadow: 0 0 8px  var(--clr-cyan); }
+  50%       { color: var(--clr-violet-l); text-shadow: 0 0 14px var(--clr-violet-l); }
+}
+
+/* ── About Section Scan Line ── */
+.about::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right,
+    transparent,
+    rgba(124,58,237,0.5) 30%,
+    rgba(6,182,212,0.6)  50%,
+    rgba(124,58,237,0.5) 70%,
+    transparent
+  );
+  top: -2px;
+  z-index: 2;
+  pointer-events: none;
+  animation: scanLine 8s linear infinite;
+}
+@keyframes scanLine {
+  0%   { top: -2px;  opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%;  opacity: 0; }
+}
+
+/* ── Contact Item Neon Hover ── */
+.contact-item {
+  transition: border-color var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base) var(--ease-out);
+}
+.contact-item:hover {
+  border-color: rgba(6,182,212,0.45);
+  box-shadow: 0 0 16px rgba(6,182,212,0.15);
+  transform: translateX(4px);
+}
+
+/* ── Service Link Neon on Hover ── */
+.service-link:hover {
+  color: var(--clr-cyan-l);
+  text-shadow: 0 0 10px rgba(6,182,212,0.5);
+}
+
+/* ── Scroll Hint Pulse ── */
+.hero-scroll-hint {
+  animation: fadeSlideIn 1s 0.6s var(--ease-out) both, scrollHintPulse 2.5s ease-in-out 2s infinite;
+}
+@keyframes scrollHintPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+.scroll-mouse {
+  box-shadow: 0 0 12px rgba(255,255,255,0.15);
+}
+
+/* ── Hero Orbs — Breathing Pulse ── */
+@keyframes orbBreath {
+  0%, 100% { transform: scale(1)    translate(0, 0); }
+  50%       { transform: scale(1.1) translate(15px, -10px); }
+}
+.hero .orb-1 { animation: orbBreath 9s ease-in-out infinite; }
+.hero .orb-2 { animation: orbBreath 9s ease-in-out infinite 4.5s; }
+
+/* ── Nav Active Link Glow ── */
+.nav-links a[aria-current="page"] {
+  color: var(--clr-white);
+}
+.nav-links a[aria-current="page"]::after {
+  transform: scaleX(1);
+  box-shadow: 0 0 6px rgba(124,58,237,0.7);
+}
+
+/* ── Ghost Button Neon Hover ── */
+.btn-ghost:hover {
+  border-color: rgba(6,182,212,0.6);
+  background: rgba(6,182,212,0.08);
+  box-shadow: 0 0 20px rgba(6,182,212,0.2);
+}
