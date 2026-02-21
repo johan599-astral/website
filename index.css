@@ -862,11 +862,13 @@ footer {
 
 /* ── Logo Image ── */
 .nav-logo-img {
-  height: 40px;
+  display: block;
+  height: 42px;
   width: auto;
-  max-width: 200px;
+  max-width: 180px;
   object-fit: contain;
-  border-radius: 6px;
+  object-position: left center;
+  flex-shrink: 0;
   transition: filter var(--dur-fast);
 }
 .nav-logo:hover .nav-logo-img {
@@ -876,7 +878,8 @@ footer {
   filter: drop-shadow(0 0 6px rgba(124,58,237,0.4));
 }
 .nav-logo-img--footer {
-  height: 32px;
+  height: 34px;
+  max-width: 150px;
 }
 
 /* ── Animated Gradient Text — color-cycling shimmer ── */
