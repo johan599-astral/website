@@ -21,7 +21,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
   const ctx = canvas.getContext('2d');
   let W, H, stars = [];
   let t = 0;
-  const STAR_COUNT = 160;
+  const STAR_COUNT = 120;
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
 
@@ -34,8 +34,8 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
     return {
       x:     rnd(0, W),
       y:     rnd(0, H),
-      r:     rnd(0.3, 1.7),
-      alpha: rnd(0.25, 0.85),
+      r:     rnd(0.2, 1.1),
+      alpha: rnd(0.08, 0.35),
       speed: rnd(0.0002, 0.0009),
       phase: rnd(0, Math.PI * 2),
       drift: rnd(-0.025, 0.025),
