@@ -896,22 +896,14 @@ footer {
   -webkit-text-fill-color: transparent;
 }
 
-/* ── Animated Gradient Text — color-cycling shimmer ── */
+/* ── Gradient text — plain white, fully readable ── */
 .gradient-text {
-  background: linear-gradient(90deg,
-    #7C3AED 0%,
-    #06B6D4 20%,
-    #C026D3 40%,
-    #06B6D4 60%,
-    #7C3AED 80%,
-    #06B6D4 100%
-  );
-  background-size: 300% auto;
-  animation: gradientCycle 6s linear infinite;
-}
-@keyframes gradientCycle {
-  0%   { background-position: 0%   center; }
-  100% { background-position: 300% center; }
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: var(--clr-white);
+  color: var(--clr-white);
+  animation: none;
 }
 
 /* ── Hero Title Neon Glow ── */
