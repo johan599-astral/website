@@ -93,10 +93,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: var(--fw-semibold); }
 p  { color: var(--clr-muted); line-height: 1.75; }
 
 .gradient-text {
-  background: var(--grad-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--clr-white);
 }
 
 .section-label {
@@ -896,15 +893,6 @@ footer {
   -webkit-text-fill-color: transparent;
 }
 
-/* ── Gradient text — plain white, fully readable ── */
-.gradient-text {
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: var(--clr-white);
-  color: var(--clr-white);
-  animation: none;
-}
 
 /* ── Hero Title Neon Glow ── */
 .hero-title {
