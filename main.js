@@ -11,7 +11,94 @@ const $ = (s, ctx = document) => ctx.querySelector(s);
 const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 /* ============================================================
-   1. PARTICLE STAR CANVAS
+   1. FULL-PAGE BACKGROUND STAR CANVAS
+      Gentle twinkling stars visible across every section
+   ============================================================ */
+(function initBgStars() {
+  const canvas = $('#bg-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+  let t = 0;
+  const STAR_COUNT = 160;
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createStar() {
+    return {
+      x:     rnd(0, W),
+      y:     rnd(0, H),
+      r:     rnd(0.3, 1.7),
+      alpha: rnd(0.25, 0.85),
+      speed: rnd(0.0002, 0.0009),
+      phase: rnd(0, Math.PI * 2),
+      drift: rnd(-0.025, 0.025),
+      color: Math.random() > 0.87 ? '#06B6D4'
+           : Math.random() > 0.93 ? '#C084FC'
+           : '#FFFFFF',
+    };
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (const s of stars) {
+      const a = s.alpha * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.fillStyle   = s.color;
+      ctx.beginPath();
+
+      if (s.r > 1.3) {
+        /* 4-pointed sparkle for larger stars */
+        const len = s.r * 2.5;
+        ctx.moveTo(s.x,       s.y - len);
+        ctx.lineTo(s.x + 0.5, s.y - 0.5);
+        ctx.lineTo(s.x + len, s.y);
+        ctx.lineTo(s.x + 0.5, s.y + 0.5);
+        ctx.lineTo(s.x,       s.y + len);
+        ctx.lineTo(s.x - 0.5, s.y + 0.5);
+        ctx.lineTo(s.x - len, s.y);
+        ctx.lineTo(s.x - 0.5, s.y - 0.5);
+        ctx.closePath();
+      } else {
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      ctx.restore();
+
+      s.x += s.drift;
+      if (s.x < -5) s.x = W + 5;
+      if (s.x > W + 5) s.x = -5;
+    }
+
+    t++;
+    requestAnimationFrame(draw);
+  }
+
+  function handleResize() {
+    clearTimeout(handleResize._t);
+    handleResize._t = setTimeout(() => {
+      resize();
+      stars = Array.from({ length: STAR_COUNT }, createStar);
+    }, 200);
+  }
+
+  resize();
+  stars = Array.from({ length: STAR_COUNT }, createStar);
+  draw();
+  window.addEventListener('resize', handleResize);
+})();
+
+
+/* ============================================================
+   2. HERO PARTICLE STAR CANVAS
       Phase 1: Warp/hyperspace launch (first ~110 frames)
       Phase 2: Normal starfield with shooting stars + constellation lines
    ============================================================ */
@@ -316,7 +403,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 
 /* ============================================================
-   2. NAVBAR — scroll behaviour & highlight
+   3. NAVBAR — scroll behaviour & highlight
    ============================================================ */
 (function initNavbar() {
   const nav = $('#navbar');
@@ -345,7 +432,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 
 /* ============================================================
-   3. MOBILE HAMBURGER MENU
+   4. MOBILE HAMBURGER MENU
    ============================================================ */
 (function initMobileMenu() {
   const btn   = $('#hamburger');
@@ -383,7 +470,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 
 /* ============================================================
-   4. SCROLL-REVEAL using IntersectionObserver
+   5. SCROLL-REVEAL using IntersectionObserver
    ============================================================ */
 (function initScrollReveal() {
   const revealEls = $$('.reveal');
@@ -403,7 +490,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 
 /* ============================================================
-   5. HERO PARALLAX — subtle mouse-track
+   6. HERO PARALLAX — subtle mouse-track
    ============================================================ */
 (function initHeroParallax() {
   const hero = $('.hero');
@@ -427,7 +514,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 
 /* ============================================================
-   6. CONTACT FORM — client-side submit feedback
+   7. CONTACT FORM — client-side submit feedback
    ============================================================ */
 (function initContactForm() {
   const form = $('#contact-form');
@@ -456,7 +543,7 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
 
 
 /* ============================================================
-   7. NEWSLETTER FORM — feedback
+   8. NEWSLETTER FORM — feedback
    ============================================================ */
 (function initNewsletter() {
   const form = $('#newsletter-form');
