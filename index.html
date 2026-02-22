@@ -21,7 +21,31 @@
     <div class="container">
       <div class="nav-inner">
         <a href="#home" class="nav-logo" aria-label="Astral Tech Advisors Home">
-          <img src="logo.png" alt="Astral Tech Advisors" class="nav-logo-img" />
+          <!-- Gradient ATA mark — inline SVG, no image file needed -->
+          <svg class="nav-logo-mark" viewBox="0 0 38 42" width="38" height="42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="ataGradNav" x1="0" y1="42" x2="38" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stop-color="#7C3AED"/>
+                <stop offset="55%"  stop-color="#06B6D4"/>
+                <stop offset="100%" stop-color="#C026D3"/>
+              </linearGradient>
+            </defs>
+            <!-- Orbital ellipse -->
+            <ellipse cx="19" cy="27" rx="18" ry="9" stroke="url(#ataGradNav)" stroke-width="2" transform="rotate(-22 19 27)"/>
+            <!-- Triangle / A shape (filled softly) -->
+            <path d="M19 14 L35 40 L3 40 Z" fill="url(#ataGradNav)" fill-opacity="0.15" stroke="url(#ataGradNav)" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- A crossbar -->
+            <line x1="10" y1="33" x2="28" y2="33" stroke="url(#ataGradNav)" stroke-width="2" stroke-linecap="round"/>
+            <!-- Upward arrow from apex -->
+            <line x1="19" y1="14" x2="19" y2="5" stroke="url(#ataGradNav)" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="16,10 19,5 22,10" stroke="url(#ataGradNav)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+            <!-- Star at tip -->
+            <circle cx="19" cy="4.5" r="1.8" fill="url(#ataGradNav)"/>
+          </svg>
+          <span class="nav-logo-wordmark">
+            <span class="nav-logo-title">Astral Tech</span>
+            <span class="nav-logo-sub">Advisors</span>
+          </span>
         </a>
 
         <ul class="nav-links" id="nav-links" role="list">
@@ -384,7 +408,25 @@
         <!-- Brand -->
         <div class="footer-brand">
           <a href="#home" class="nav-logo" aria-label="Astral Tech Advisors">
-            <img src="logo.png" alt="Astral Tech Advisors" class="nav-logo-img nav-logo-img--footer" />
+            <svg class="nav-logo-mark nav-logo-mark--footer" viewBox="0 0 38 42" width="32" height="35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="ataGradFtr" x1="0" y1="42" x2="38" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%"   stop-color="#7C3AED"/>
+                  <stop offset="55%"  stop-color="#06B6D4"/>
+                  <stop offset="100%" stop-color="#C026D3"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="19" cy="27" rx="18" ry="9" stroke="url(#ataGradFtr)" stroke-width="2" transform="rotate(-22 19 27)"/>
+              <path d="M19 14 L35 40 L3 40 Z" fill="url(#ataGradFtr)" fill-opacity="0.15" stroke="url(#ataGradFtr)" stroke-width="2.5" stroke-linejoin="round"/>
+              <line x1="10" y1="33" x2="28" y2="33" stroke="url(#ataGradFtr)" stroke-width="2" stroke-linecap="round"/>
+              <line x1="19" y1="14" x2="19" y2="5" stroke="url(#ataGradFtr)" stroke-width="2" stroke-linecap="round"/>
+              <polyline points="16,10 19,5 22,10" stroke="url(#ataGradFtr)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+              <circle cx="19" cy="4.5" r="1.8" fill="url(#ataGradFtr)"/>
+            </svg>
+            <span class="nav-logo-wordmark">
+              <span class="nav-logo-title">Astral Tech</span>
+              <span class="nav-logo-sub">Advisors</span>
+            </span>
           </a>
           <p>
             Next-generation bookkeeping and financial consulting for small
