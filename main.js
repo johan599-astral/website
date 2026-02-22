@@ -277,24 +277,6 @@ const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
       if (orb.y < -orb.r || orb.y > H + orb.r) orb.drift.y *= -1;
     }
 
-    /* Constellation lines (first 80 stars, O(n²) bounded) */
-    const cStars = stars.slice(0, 80);
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i < cStars.length; i++) {
-      for (let j = i + 1; j < cStars.length; j++) {
-        const dx   = cStars[i].x - cStars[j].x;
-        const dy   = cStars[i].y - cStars[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
-          ctx.globalAlpha = (1 - dist / 100) * 0.14;
-          ctx.strokeStyle = '#7C3AED';
-          ctx.beginPath();
-          ctx.moveTo(cStars[i].x, cStars[i].y);
-          ctx.lineTo(cStars[j].x, cStars[j].y);
-          ctx.stroke();
-        }
-      }
-    }
     ctx.globalAlpha = 1;
 
     /* Stars */
