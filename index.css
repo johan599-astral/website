@@ -69,15 +69,25 @@
 /* ── Reset & Base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; background: var(--clr-bg); }
 
 body {
   font-family: var(--ff-base);
-  background-color: var(--clr-bg);
+  background: transparent;
   color: var(--clr-text);
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ── Full-page background star canvas ── */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 img { max-width: 100%; display: block; }
@@ -502,7 +512,7 @@ p  { color: var(--clr-muted); line-height: 1.75; }
    ============================================================ */
 .about {
   padding: var(--space-2xl) 0;
-  background: var(--clr-bg-2);
+  background: rgba(13, 17, 41, 0.82);
   position: relative;
   overflow: hidden;
 }
@@ -681,7 +691,7 @@ p  { color: var(--clr-muted); line-height: 1.75; }
    FOOTER
    ============================================================ */
 footer {
-  background: var(--clr-bg-2);
+  background: rgba(13, 17, 41, 0.92);
   border-top: 1px solid var(--clr-border);
   padding: var(--space-xl) 0 var(--space-md);
 }
