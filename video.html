@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Story — Astral Tech Advisors</title>
+    <meta name="description"
+        content="Accounting experts powered by space-age automation. Watch the Astral Tech Advisors story." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: #04060F;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        #stage {
+            position: fixed;
+            inset: 0;
+        }
+
+        /* UI chrome */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(4, 6, 15, 0.9), transparent);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-link img {
+            height: 34px;
+            mix-blend-mode: lighten;
+            filter: brightness(1.2);
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #fff;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #7C3AED, #06B6D4);
+            z-index: 100;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.8);
+        }
+
+        /* Subtitle captions */
+        #caption {
+            position: fixed;
+            bottom: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+            max-width: 700px;
+            pointer-events: none;
+        }
+
+        #caption-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #06B6D4;
+            margin-bottom: 0.4rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #caption-text {
+            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            font-weight: 700;
+            line-height: 1.3;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        #caption-text .grad {
+            background: linear-gradient(135deg, #7C3AED, #06B6D4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #caption-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #caption-label.visible {
+            opacity: 1;
+        }
+
+        /* Replay button */
+        #replay-btn {
+            position: fixed;
+            bottom: 6rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #7C3AED, #06B6D4);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 0.75rem 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            z-index: 200;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #replay-btn:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 0 40px rgba(124, 58, 237, 0.9);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="logo-link">
+            <img src="logo.jpg" alt="Astral Tech Advisors" />
+        </a>
+        <a href="index.html" class="back-btn">← Back to Site</a>
+    </div>
+
+    <canvas id="stage"></canvas>
+
+    <div id="caption">
+        <div id="caption-label"></div>
+        <div id="caption-text"></div>
+    </div>
+
+    <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    <button id="replay-btn" onclick="startAnimation()">↺ Watch Again</button>
+
+    <script>
+        'use strict';
+
+        const canvas = document.getElementById('stage');
+        const ctx = canvas.getContext('2d');
+        const W = () => canvas.width;
+        const H = () => canvas.height;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        /* ─── UTILITIES ─── */
+        const lerp = (a, b, t) => a + (b - a) * t;
+        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+        const easeInOut = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+        /* ─── STAR FIELD ─── */
+        let stars = [];
+        function buildStars(n = 300) {
+            stars = Array.from({ length: n }, () => ({
+                x: Math.random(), y: Math.random(),
+                r: Math.random() * 1.6 + 0.3,
+                a: Math.random(),
+                s: Math.random() * 0.0008 + 0.0002,
+                p: Math.random() * Math.PI * 2,
+                c: Math.random() > 0.8 ? '#06B6D4' : '#fff',
+            }));
+        }
+        buildStars();
+        window.addEventListener('resize', () => buildStars());
+
+        function drawStars(t, alpha = 1) {
+            for (const s of stars) {
+                const tw = s.a * (0.4 + 0.6 * Math.sin(t * s.s + s.p));
+                ctx.save();
+                ctx.globalAlpha = tw * alpha;
+                ctx.fillStyle = s.c;
+                ctx.beginPath();
+                ctx.arc(s.x * W(), s.y * H(), s.r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        /* ─── NEBULA ORBS ─── */
+        function drawNebula(cx, cy, r, col, alpha, t = 0) {
+            const px = typeof cx === 'function' ? cx() : cx * W();
+            const py = typeof cy === 'function' ? cy() : cy * H();
+            const pr = typeof r === 'function' ? r() : r * Math.min(W(), H());
+            const g = ctx.createRadialGradient(px, py, 0, px, py, pr);
+            g.addColorStop(0, col + (alpha * 0.7).toFixed(2) + ')');
+            g.addColorStop(0.5, col + (alpha * 0.25).toFixed(2) + ')');
+            g.addColorStop(1, col + '0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(px, py, pr, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        /* ─── DATA FLOWS (lines) ─── */
+        function drawDataStream(x1, y1, x2, y2, progress, col, width = 2) {
+            const ex = lerp(x1, x2, progress);
+            const ey = lerp(y1, y2, progress);
+            const grad = ctx.createLinearGradient(x1, y1, ex, ey);
+            grad.addColorStop(0, 'transparent');
+            grad.addColorStop(0.3, col);
+            grad.addColorStop(1, col);
+            ctx.save();
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = width;
+            ctx.shadowColor = col;
+            ctx.shadowBlur = 8;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(ex, ey);
+            ctx.stroke();
+            ctx.restore();
+
+            // Endpoint glow dot
+            ctx.save();
+            ctx.globalAlpha = progress;
+            ctx.fillStyle = col;
+            ctx.shadowColor = col;
+            ctx.shadowBlur = 14;
+            ctx.beginPath();
+            ctx.arc(ex, ey, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        /* ─── TEXT RENDERING ─── */
+        function drawText(text, x, y, size, weight, col, alpha) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = col;
+            ctx.font = `${weight} ${size}px Inter, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = col;
+            ctx.shadowBlur = 20;
+            ctx.fillText(text, x, y);
+            ctx.restore();
+        }
+
+        function drawGradientText(text, x, y, size, weight, alpha) {
+            const g = ctx.createLinearGradient(x - 200, y, x + 200, y);
+            g.addColorStop(0, '#7C3AED');
+            g.addColorStop(1, '#06B6D4');
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.font = `${weight} ${size}px Inter, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = g;
+            ctx.shadowColor = '#7C3AED';
+            ctx.shadowBlur = 30;
+            ctx.fillText(text, x, y);
+            ctx.restore();
+        }
+
+        /* ─── PLANET ─── */
+        function drawPlanet(cx, cy, r, col1, col2, alpha, t) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            const g = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.05, cx, cy, r);
+            g.addColorStop(0, col1);
+            g.addColorStop(0.6, col2);
+            g.addColorStop(1, '#000');
+            ctx.fillStyle = g;
+            ctx.shadowColor = col1;
+            ctx.shadowBlur = 40;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Ring
+            ctx.strokeStyle = 'rgba(124,58,237,0.4)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, r * 1.6, r * 0.35, Math.PI * 0.18, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        /* ─── LEDGER / GRID ─── */
+        function drawLedger(cx, cy, w, h, progress, alpha) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            const rows = 5, cols = 3;
+            const cw = w / cols, rh = h / rows;
+            const revealed = Math.floor(progress * rows);
+
+            ctx.strokeStyle = 'rgba(124,58,237,0.4)';
+            ctx.lineWidth = 1;
+
+            for (let r = 0; r <= Math.min(revealed + 1, rows); r++) {
+                const y = cy - h / 2 + r * rh;
+                ctx.beginPath();
+                ctx.moveTo(cx - w / 2, y);
+                ctx.lineTo(cx + w / 2, y);
+                ctx.stroke();
+            }
+            for (let c = 0; c <= cols; c++) {
+                ctx.beginPath();
+                ctx.moveTo(cx - w / 2 + c * cw, cy - h / 2);
+                ctx.lineTo(cx - w / 2 + c * cw, cy + Math.min(revealed, rows) * rh - h / 2);
+                ctx.stroke();
+            }
+
+            // Fill rows with data shimmer
+            const shimmerX = cx - w / 2 + (progress % 0.2) * 5 * w;
+            for (let r = 0; r < revealed; r++) {
+                const y = cy - h / 2 + r * rh;
+                ctx.fillStyle = r % 2 === 0 ? 'rgba(124,58,237,0.06)' : 'transparent';
+                ctx.fillRect(cx - w / 2, y, w, rh);
+
+                const colW = [0.4, 0.3, 0.25];
+                const colors = ['rgba(255,255,255,0.6)', 'rgba(6,182,212,0.7)', 'rgba(124,58,237,0.8)'];
+                for (let c = 0; c < cols; c++) {
+                    ctx.fillStyle = colors[c];
+                    ctx.font = '11px Inter, monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(
+                        c === 2 ? `$${(Math.random() * 10).toFixed(2)}k` : (c === 0 ? `Line ${r + 1}` : `Cat-${r + c}`),
+                        cx - w / 2 + (c + 0.5) * cw,
+                        y + rh / 2
+                    );
+                }
+            }
+            ctx.restore();
+        }
+
+        /* ─── AUTOMATION NODES ─── */
+        function drawAutomationGraph(t, alpha) {
+            const cx = W() / 2, cy = H() / 2;
+            const nodes = [
+                { x: cx - 260, y: cy - 80, label: 'Bank Feed', icon: '🏦', col: '#7C3AED' },
+                { x: cx, y: cy - 160, label: 'n8n Flow', icon: '⚡', col: '#06B6D4' },
+                { x: cx + 260, y: cy - 80, label: 'QuickBooks', icon: '📊', col: '#7C3AED' },
+                { x: cx - 200, y: cy + 100, label: 'Payroll', icon: '💰', col: '#9F60F5' },
+                { x: cx, y: cy + 60, label: 'Automation', icon: '🤖', col: '#22D3EE' },
+                { x: cx + 200, y: cy + 100, label: 'Dashboard', icon: '📈', col: '#06B6D4' },
+            ];
+
+            const edges = [
+                [0, 1], [0, 4], [1, 2], [1, 4], [3, 4], [4, 5], [4, 2]
+            ];
+
+            const progress = clamp((t - 0.2) / 0.6, 0, 1);
+
+            // Draw edges
+            for (const [a, b] of edges) {
+                const na = nodes[a], nb = nodes[b];
+                const ep = easeOut(clamp(progress * 1.5 - 0.1, 0, 1));
+                drawDataStream(na.x, na.y, nb.x, nb.y, ep, na.col, 1.5);
+            }
+
+            // Draw nodes
+            for (let i = 0; i < nodes.length; i++) {
+                const nd = nodes[i];
+                const np = easeOut(clamp((t - i * 0.05) * 3, 0, 1));
+                ctx.save();
+                ctx.globalAlpha = alpha * np;
+
+                // Glow ring
+                const gr = ctx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, 45);
+                gr.addColorStop(0, nd.col + '40');
+                gr.addColorStop(1, nd.col + '00');
+                ctx.fillStyle = gr;
+                ctx.beginPath();
+                ctx.arc(nd.x, nd.y, 45, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Node circle
+                ctx.fillStyle = 'rgba(8,11,26,0.9)';
+                ctx.strokeStyle = nd.col;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(nd.x, nd.y, 28, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Icon
+                ctx.font = '18px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#fff';
+                ctx.fillText(nd.icon, nd.x, nd.y);
+
+                // Label
+                ctx.font = '600 11px Inter';
+                ctx.fillStyle = 'rgba(255,255,255,0.75)';
+                ctx.fillText(nd.label, nd.x, nd.y + 42);
+
+                ctx.restore();
+            }
+        }
+
+        /* ─── CAPTION SYSTEM ─── */
+        const captionEl = document.getElementById('caption-text');
+        const captionLbl = document.getElementById('caption-label');
+        let currentCaption = '';
+
+        const CAPTIONS = [
+            // [startFraction, endFraction, label, html]
+            [0.02, 0.18, 'THE PROBLEM', 'Small businesses are <span class="grad">under-served</span> by outdated accounting.'],
+            [0.20, 0.35, 'OUR MISSION', 'We level the playing field with <span class="grad">expert guidance & modern automation.</span>'],
+            [0.37, 0.52, 'BOOKKEEPING', 'Real-time books — automatically reconciled, <span class="grad">always accurate.</span>'],
+            [0.54, 0.68, 'AUTOMATION', 'n8n · Make · Zapier — your back-office <span class="grad">runs itself.</span>'],
+            [0.70, 0.84, 'EXPERTISE', 'Decades of corporate accounting experience, <span class="grad">at your fingertips.</span>'],
+            [0.86, 1.00, 'ASTRAL TECH ADVISORS', '<span class="grad">Astral clarity for your business.</span>'],
+        ];
+
+        function updateCaption(progress) {
+            const match = CAPTIONS.find(c => progress >= c[0] && progress < c[1]);
+            if (!match) {
+                captionEl.classList.remove('visible');
+                captionLbl.classList.remove('visible');
+                return;
+            }
+            const html = match[3];
+            if (captionEl.innerHTML !== html) {
+                captionEl.classList.remove('visible');
+                captionLbl.classList.remove('visible');
+                setTimeout(() => {
+                    captionEl.innerHTML = html;
+                    captionLbl.textContent = match[2];
+                    captionEl.classList.add('visible');
+                    captionLbl.classList.add('visible');
+                }, 200);
+            }
+        }
+
+        /* ─── ANIMATION TIMELINE (30 seconds) ─── */
+        const DURATION = 30000; // ms
+        let startTime = null;
+        let animId = null;
+        let finished = false;
+
+        function animate(ts) {
+            if (!startTime) startTime = ts;
+            const elapsed = ts - startTime;
+            const progress = clamp(elapsed / DURATION, 0, 1);
+            const t = elapsed / 1000; // seconds
+
+            // Progress bar
+            document.getElementById('progress-bar').style.width = (progress * 100) + '%';
+
+            ctx.clearRect(0, 0, W(), H());
+
+            // ── Background
+            ctx.fillStyle = '#04060F';
+            ctx.fillRect(0, 0, W(), H());
+
+            // ─── SCENE 1 (0–5s): PROBLEM — barren world, few stars
+            if (elapsed < 5000) {
+                const p = elapsed / 5000;
+                const starAlpha = lerp(0.2, 0.6, p);
+                drawStars(t, starAlpha);
+                drawNebula(0.5, 0.5, 0.4, 'rgba(40,0,60,', lerp(0, 0.3, p));
+                // A distant planet
+                const pr = lerp(0, 1, easeOut(p));
+                drawPlanet(W() * 0.75, H() * 0.3, 90 * pr, '#1a0a2e', '#0a0515', pr, t);
+                // Dim ledger fragments
+                drawLedger(W() * 0.38, H() * 0.52, 240, 150, p * 0.3, p * 0.4);
+            }
+
+            // ─── SCENE 2 (4–10s): MISSION — stars bloom, nebula ignites
+            if (elapsed > 4000 && elapsed < 10000) {
+                const p = clamp((elapsed - 4000) / 6000, 0, 1);
+                drawStars(t, lerp(0.5, 1, p));
+                drawNebula(0.5, 0.4, 0.5, 'rgba(124,58,237,', lerp(0, 0.35, easeOut(p)));
+                drawNebula(0.2, 0.7, 0.35, 'rgba(6,182,212,', lerp(0, 0.2, p));
+                drawPlanet(W() * 0.75, H() * 0.3, 90, '#1a0a2e', '#0a0515', 1, t);
+                // Ascent arrow / launch
+                const launchY = lerp(H() * 0.9, H() * 0.1, easeOut(p));
+                ctx.save();
+                ctx.globalAlpha = p;
+                ctx.font = '32px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🚀', W() * 0.5, launchY);
+                ctx.restore();
+                // Trail
+                const gr = ctx.createLinearGradient(W() * 0.5, H() * 0.9, W() * 0.5, launchY);
+                gr.addColorStop(0, 'transparent');
+                gr.addColorStop(1, 'rgba(124,58,237,0.6)');
+                ctx.save();
+                ctx.strokeStyle = gr;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(W() * 0.5, launchY + 30);
+                ctx.lineTo(W() * 0.5, H() * 0.9);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // ─── SCENE 3 (9–16s): BOOKKEEPING — ledger fills with data
+            if (elapsed > 9000 && elapsed < 16000) {
+                const p = clamp((elapsed - 9000) / 7000, 0, 1);
+                drawStars(t, 0.8);
+                drawNebula(0.5, 0.4, 0.5, 'rgba(124,58,237,', 0.3);
+                drawNebula(0.8, 0.6, 0.3, 'rgba(6,182,212,', 0.2);
+                // Ledger
+                drawLedger(W() / 2, H() / 2, 360, 220, easeInOut(p), lerp(0, 1, easeOut(p)));
+                // "DIGITAL LEDGER" label
+                drawText('DIGITAL LEDGER', W() / 2, H() / 2 - 140, 12, '600', 'rgba(6,182,212,0.6)', p);
+                // Orbiting rings
+                for (let i = 0; i < 3; i++) {
+                    const angle = t * 0.5 + i * Math.PI * 0.667;
+                    const rx = W() / 2 + Math.cos(angle) * (200 + i * 40);
+                    const ry = H() / 2 + Math.sin(angle) * (60 + i * 15);
+                    ctx.save();
+                    ctx.globalAlpha = 0.15 * p;
+                    ctx.strokeStyle = i === 0 ? '#7C3AED' : '#06B6D4';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.ellipse(W() / 2, H() / 2, 200 + i * 40, 60 + i * 15, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                    // dot on ring
+                    ctx.globalAlpha = 0.6 * p;
+                    ctx.fillStyle = i === 0 ? '#7C3AED' : '#06B6D4';
+                    ctx.beginPath();
+                    ctx.arc(rx, ry, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            // ─── SCENE 4 (15–22s): AUTOMATION — node graph
+            if (elapsed > 15000 && elapsed < 22000) {
+                const p = clamp((elapsed - 15000) / 7000, 0, 1);
+                drawStars(t, 0.9);
+                drawNebula(0.3, 0.4, 0.45, 'rgba(124,58,237,', 0.28);
+                drawNebula(0.7, 0.6, 0.4, 'rgba(6,182,212,', 0.22);
+                drawAutomationGraph(p, 1);
+                // Pulse rings from center node
+                if (p > 0.4) {
+                    const rp = (t * 1.5) % 1;
+                    ctx.save();
+                    ctx.globalAlpha = (1 - rp) * 0.4 * p;
+                    ctx.strokeStyle = '#06B6D4';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(W() / 2, H() / 2 + 60, 28 + rp * 80, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+
+            // ─── SCENE 5 (21–27s): EXPERTISE — starfield at full brightness, logo reveal
+            if (elapsed > 21000 && elapsed < 27000) {
+                const p = clamp((elapsed - 21000) / 6000, 0, 1);
+                drawStars(t, 1);
+                drawNebula(0.5, 0.4, 0.6, 'rgba(124,58,237,', lerp(0.15, 0.4, p));
+                drawNebula(0.2, 0.7, 0.5, 'rgba(6,182,212,', lerp(0.1, 0.3, p));
+
+                // Constellations / connecting dots (simulating corporate + tech)
+                const pts = [
+                    [W() * 0.15, H() * 0.2], [W() * 0.3, H() * 0.35], [W() * 0.22, H() * 0.55],
+                    [W() * 0.78, H() * 0.2], [W() * 0.88, H() * 0.4], [W() * 0.72, H() * 0.6],
+                ];
+                ctx.save();
+                ctx.globalAlpha = 0.25 * p;
+                ctx.strokeStyle = '#7C3AED';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < pts.length - 1; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[i][0], pts[i][1]);
+                    ctx.lineTo(pts[i + 1][0], pts[i + 1][1]);
+                    ctx.stroke();
+                }
+                for (const pt of pts) {
+                    ctx.fillStyle = '#7C3AED';
+                    ctx.beginPath();
+                    ctx.arc(pt[0], pt[1], 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+
+                // Big declaration text
+                const ta = easeOut(clamp(p * 2, 0, 1));
+                drawText('10+ years of corporate expertise', W() / 2, H() / 2 - 40, clamp(W() * 0.022, 14, 28), '400', 'rgba(255,255,255,0.7)', ta);
+                drawGradientText('Now working for you.', W() / 2, H() / 2 + 20, clamp(W() * 0.03, 18, 38), '800', ta);
+            }
+
+            // ─── SCENE 6 (26–30s): FINALE — logo + tagline
+            if (elapsed > 26000) {
+                const p = clamp((elapsed - 26000) / 4000, 0, 1);
+                drawStars(t, 1);
+                drawNebula(0.5, 0.45, 0.65, 'rgba(124,58,237,', lerp(0.3, 0.45, p));
+                drawNebula(0.5, 0.55, 0.5, 'rgba(6,182,212,', lerp(0.2, 0.35, p));
+
+                // Large gradient headline
+                const topA = easeOut(p);
+                drawText('ASTRAL TECH ADVISORS', W() / 2, H() / 2 - 60, clamp(W() * 0.025, 16, 32), '900', '#fff', topA * 0.9);
+                drawGradientText('Astral clarity for your business', W() / 2, H() / 2, clamp(W() * 0.04, 24, 56), '900', topA);
+                drawText('contact@astraltechadvisors.com  |  astraltechadvisors.com', W() / 2, H() / 2 + 65, 14, '400', 'rgba(255,255,255,0.45)', topA * 0.8);
+
+                // Starburst logo circle
+                const sr = clamp(W() * 0.04, 30, 60) * easeOut(p);
+                const sg = ctx.createRadialGradient(W() / 2, H() / 2 - 130, 0, W() / 2, H() / 2 - 130, sr);
+                sg.addColorStop(0, 'rgba(124,58,237,0.9)');
+                sg.addColorStop(1, 'rgba(6,182,212,0.0)');
+                ctx.save();
+                ctx.globalAlpha = easeOut(p);
+                ctx.fillStyle = sg;
+                ctx.beginPath();
+                ctx.arc(W() / 2, H() / 2 - 130, sr, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.font = `${sr * 0.9}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#fff';
+                ctx.fillText('✦', W() / 2, H() / 2 - 130);
+                ctx.restore();
+            }
+
+            // Update caption
+            updateCaption(progress);
+
+            // End
+            if (progress >= 1 && !finished) {
+                finished = true;
+                captionEl.classList.remove('visible');
+                captionLbl.classList.remove('visible');
+                document.getElementById('replay-btn').style.display = 'block';
+                return;
+            }
+
+            animId = requestAnimationFrame(animate);
+        }
+
+        function startAnimation() {
+            if (animId) cancelAnimationFrame(animId);
+            startTime = null;
+            finished = false;
+            document.getElementById('replay-btn').style.display = 'none';
+            captionEl.innerHTML = '';
+            captionEl.classList.remove('visible');
+            captionLbl.classList.remove('visible');
+            animId = requestAnimationFrame(animate);
+        }
+
+        startAnimation();
+    </script>
+</body>
+
+</html>
